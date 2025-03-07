@@ -38,30 +38,34 @@ uri="http://www.springframework.org/tags/form" prefix="form" %>
                 <th>ID</th>
                 <th>Email</th>
                 <th>Full Name</th>
+                <th>Phone</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th>1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>
-                  <button class="btn btn-success">View</button>
-                  <button class="btn btn-warning mx-2">Update</button>
-                  <button class="btn btn-danger">Delete</button>
-                </td>
-              </tr>
-              <tr>
-                <th>2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>
-                  <button class="btn btn-success">View</button>
-                  <button class="btn btn-warning mx-2">Update</button>
-                  <button class="btn btn-danger">Delete</button>
-                </td>
-              </tr>
+              <c:forEach var="user" items="${userList}">
+                <tr>
+                  <td>${user.id}</td>
+                  <td>${user.email}</td>
+                  <td style="text-align: center">${user.fullName}</td>
+                  <td style="text-align: center">${user.phone}</td>
+                  <td>
+                    <a href="/admin/user/${user.id}" class="btn btn-success"
+                      >View</a
+                    >
+                    <a
+                      href="/admin/user/update/${user.id}"
+                      class="btn btn-warning mx-2"
+                      >Update</a
+                    >
+                    <a
+                      href="/admin/user/delete/${user.id}"
+                      class="btn btn-danger"
+                      >Delete</a
+                    >
+                  </td>
+                </tr>
+              </c:forEach>
             </tbody>
           </table>
         </div>
