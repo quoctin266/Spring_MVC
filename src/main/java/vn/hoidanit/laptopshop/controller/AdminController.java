@@ -4,11 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.services.UserService;
@@ -19,16 +16,6 @@ public class AdminController {
 
     public AdminController(UserService userService) {
         this.userService = userService;
-    }
-
-    // admin home page
-    @RequestMapping("/admin")
-    public String adminHomePage(Model model) {
-        List<User> userList = this.userService.getAllUsersByEmail("dt@gmail.com");
-        System.out.println(userList);
-
-        // file path
-        return "hello";
     }
 
     @RequestMapping("/admin/user")
@@ -48,7 +35,7 @@ public class AdminController {
         return "admin/user/show";
     }
 
-    @RequestMapping("/admin/user/create")
+    @GetMapping("/admin/user/create")
     public String createUserPage(Model model) {
         model.addAttribute("newUser", new User());
 
@@ -56,8 +43,9 @@ public class AdminController {
         return "admin/user/create";
     }
 
-    @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
-    public String createUser(Model model, @ModelAttribute("newUser") User user) {
+    @PostMapping("/admin/user/create")
+    public String createUser(Model model, @ModelAttribute("newUser") User user,
+            @RequestParam("file") MultipartFile file) {
         this.userService.handleSaveUser(user);
 
         return "redirect:/admin/user";
