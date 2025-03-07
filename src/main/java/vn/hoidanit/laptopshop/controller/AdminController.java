@@ -21,7 +21,8 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @GetMapping("/admin")
+    // admin home page
+    @RequestMapping("/admin")
     public String adminHomePage(Model model) {
         List<User> userList = this.userService.getAllUsersByEmail("dt@gmail.com");
         System.out.println(userList);
